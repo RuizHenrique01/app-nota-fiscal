@@ -9,28 +9,12 @@ export default class GenerateInvoices {
         const outputs: Output[] = [];
         const contracts = await this.contractRepository.list();
         for (const contract of contracts) {
-            if (input.type === "cash") {
-                for (const payment of contract.payments) {
-                    if (payment.date.getMonth() + 1 !== input.month || payment.date.getFullYear() !== input.year)
-                        continue;
-                    outputs.push({
-                        date: moment(payment.date).format("YYYY-MM-DD"),
-                        amount: parseFloat(payment.amount)
-                    });
-                }
-            }
-
-            if (input.type === "accrual") {
-                let period = 0;
-                while (period <= contract.periods) {
-                    const date = moment(contract.date).add(period++, 'months').toDate();
-                    if (date.getMonth() + 1 !== input.month || date.getFullYear() !== input.year)
-                        continue;
-                    outputs.push({
-                        date: moment(date).format("YYYY-MM-DD"),
-                        amount: parseFloat(contract.amount) / contract.periods
-                    });
-                }
+            const invoices = contract.generateInvoices(input.month, input.year, input.type);
+            for (const invoice of invoices) {
+                outputs.push({
+                    date: moment(invoice.date).format("YYYY-MM-DD"),
+                    amount: invoice.amount
+                });
             }
         }
         return outputs;
