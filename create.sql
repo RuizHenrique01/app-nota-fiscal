@@ -1,4 +1,4 @@
-drop schema branas cascade;
+DROP SCHEMA branas CASCADE;
 
 create schema branas;
 

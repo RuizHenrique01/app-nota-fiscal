@@ -1,33 +1,38 @@
-import moment from 'moment';
-import ContractDatabaseRepository from './ContractDatabaseRepository';
+import Presenter from './Presenter';
+import JsonPresenter from './JsonPresenter';
+import ContractRepository from './ContractRepository';
 
 export default class GenerateInvoices {
 
-    constructor(readonly contractRepository: ContractDatabaseRepository) {}
+    constructor(
+        readonly contractRepository: ContractRepository,
+        readonly presenter: Presenter = new JsonPresenter()
+    ) { }
 
-    async execute(input: Input): Promise<Output[]> {
+    async execute(input: Input): Promise<any> {
         const outputs: Output[] = [];
         const contracts = await this.contractRepository.list();
         for (const contract of contracts) {
             const invoices = contract.generateInvoices(input.month, input.year, input.type);
             for (const invoice of invoices) {
                 outputs.push({
-                    date: moment(invoice.date).format("YYYY-MM-DD"),
+                    date: invoice.date,
                     amount: invoice.amount
                 });
             }
         }
-        return outputs;
+        return this.presenter.present(outputs);
     }
 }
 
 type Input = {
     month: number,
     year: number,
-    type: string
+    type: string,
+    format?: string
 }
 
-type Output = {
-    date: string,
+export type Output = {
+    date: Date,
     amount: number
 }
