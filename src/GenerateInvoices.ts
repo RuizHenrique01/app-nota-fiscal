@@ -1,8 +1,9 @@
 import Presenter from './Presenter';
 import JsonPresenter from './JsonPresenter';
 import ContractRepository from './ContractRepository';
+import Usecase from './Usecase';
 
-export default class GenerateInvoices {
+export default class GenerateInvoices implements Usecase {
 
     constructor(
         readonly contractRepository: ContractRepository,
@@ -29,7 +30,9 @@ type Input = {
     month: number,
     year: number,
     type: string,
-    format?: string
+    format?: string,
+    userAgent?: string,
+    host?: string
 }
 
 export type Output = {
