@@ -1,6 +1,6 @@
-import Presenter from './Presenter';
-import JsonPresenter from './JsonPresenter';
-import ContractRepository from './ContractRepository';
+import JsonPresenter from '../../infra/presenter/JsonPresenter';
+import Presenter from '../presenter/Presenter';
+import ContractRepository from '../repository/ContractRepository';
 import Usecase from './Usecase';
 
 export default class GenerateInvoices implements Usecase {

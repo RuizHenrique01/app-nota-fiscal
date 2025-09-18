@@ -1,7 +1,7 @@
-import Contract from "./Contract";
-import ContractRepository from "./ContractRepository";
-import DatabaseConnection from "./DatabaseConnection";
-import Payment from "./Payment";
+import Contract from "../../domain/Contract";
+import DatabaseConnection from "../database/DatabaseConnection";
+import Payment from "../../domain/Payment";
+import ContractRepository from "../../application/repository/ContractRepository";
 
 export default class ContractDatabaseRepository implements ContractRepository {
 

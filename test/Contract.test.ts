@@ -1,5 +1,5 @@
-import Contract from "../src/Contract";
-import Payment from "../src/Payment";
+import Contract from "../src/domain/Contract";
+import Payment from "../src/domain/Payment";
 
 test("Deve calcular o saldo de um contrato", function () {
     const contract = new Contract("","", 6000, 12, new Date("2022-01-01T10:00:00"));
